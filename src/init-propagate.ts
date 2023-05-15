@@ -9,7 +9,7 @@ import {type Environment, type InitialSetup} from './utils/types';
 
 // SETUP
 const WORK_FUNCTION = 'propagateKeep3r';
-const GAS_LIMIT = 10_000_000;
+const GAS_LIMIT = 2_000_000;
 const PRIORITY_FEE = 2e9;
 
 (async () => {
