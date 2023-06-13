@@ -16,8 +16,10 @@
   "scripts": {
     "postinstall": "eth-sdk",
     "start:propagate": "ts-node src/init-propagate.ts",
+    "start:process": "ts-node src/init-process-from-root.ts",
     "build": "eth-sdk && tsc",
     "prod:propagate": "node dist/src/init-propagate.js",
+    "prod:process": "node dist/src/init-process-from-root.ts",
     "lint": "xo",
     "lint:fix": "xo --fix"
   },

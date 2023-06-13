@@ -1,11 +1,11 @@
 import process from 'node:process';
-import {getMainnetSdk, getGoerliSdk} from '@dethcrypto/eth-sdk-client';
-import {providers, Wallet} from 'ethers';
-import {FlashbotsBundleProvider} from '@flashbots/ethers-provider-bundle';
-import {FlashbotsBroadcastor, getEnvVariable, MempoolBroadcastor} from '@keep3r-network/keeper-scripting-utils';
-import {type RelayerProxyHub} from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
-import {runPropagate} from './shared/run-propagate';
-import {type Environment, type InitialSetupProcessFromRoot} from './utils/types';
+import { getMainnetSdk, getGoerliSdk } from '@dethcrypto/eth-sdk-client';
+import { providers, Wallet } from 'ethers';
+import { FlashbotsBundleProvider } from '@flashbots/ethers-provider-bundle';
+import { FlashbotsBroadcastor, getEnvVariable, MempoolBroadcastor } from '@keep3r-network/keeper-scripting-utils';
+import { type RelayerProxyHub } from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
+import { type Environment, type InitialSetupProcessFromRoot } from './utils/types';
+import { runProcessFromRoot } from './shared/run-processfromroot';
 
 // SETUP
 const WORK_FUNCTION = 'processFromRootKeep3r';
@@ -50,10 +50,10 @@ const PRIORITY_FEE = 2e9;
     // In ethereum mainnet, send the tx through flashbots
     const flashbotsProvider = await FlashbotsBundleProvider.create(provider, bundleSigner, flashbotsProviderUrl);
     const flashbotBroadcastor = new FlashbotsBroadcastor(flashbotsProvider as any, PRIORITY_FEE, GAS_LIMIT);
-    await runPropagate(proxyHub, setup, WORK_FUNCTION, flashbotBroadcastor.tryToWorkOnFlashbots.bind(flashbotBroadcastor));
+    await runProcessFromRoot(proxyHub, setup, WORK_FUNCTION, flashbotBroadcastor.tryToWorkOnFlashbots.bind(flashbotBroadcastor));
   } else {
     // In goerli, since flashbots are less reliable, send the tx through the mempool
     const mempoolBroadcastor = new MempoolBroadcastor(provider, PRIORITY_FEE, GAS_LIMIT);
-    await runPropagate(proxyHub, setup, WORK_FUNCTION, mempoolBroadcastor.tryToWorkOnMempool.bind(mempoolBroadcastor));
+    await runProcessFromRoot(proxyHub, setup, WORK_FUNCTION, mempoolBroadcastor.tryToWorkOnMempool.bind(mempoolBroadcastor));
   }
 })();
