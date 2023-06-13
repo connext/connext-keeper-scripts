@@ -14,7 +14,7 @@
   "contributors": [],
   "private": true,
   "scripts": {
-    "postinstall": "eth-sdk",
+    "prepare": "eth-sdk",
     "start:propagate": "ts-node src/init-propagate.ts",
     "start:process": "ts-node src/init-process-from-root.ts",
     "build": "eth-sdk && tsc",
