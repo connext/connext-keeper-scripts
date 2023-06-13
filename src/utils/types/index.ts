@@ -1,4 +1,4 @@
-import type { providers, Wallet } from 'ethers';
+import type {providers, Wallet} from 'ethers';
 
 export type InitialSetupPropagate = {
   provider: providers.JsonRpcProvider | providers.WebSocketProvider;
@@ -25,5 +25,5 @@ export type InitialSetupProcessFromRoot = {
 
 export type Environment = 'staging' | 'testnet' | 'mainnet';
 
-export { ExtraPropagateParameters, ParametersForDomains } from './propagate';
-export { RootMessage, ProcessFromRootParams } from './processFromRoot';
+export type {ExtraPropagateParameters, ParametersForDomains} from './propagate';
+export type {RootMessage, ProcessFromRootParameters} from './process-from-root';

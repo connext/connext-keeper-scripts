@@ -1,12 +1,11 @@
-import type { Block } from '@ethersproject/abstract-provider';
-import type { BroadcastorProps } from '@keep3r-network/keeper-scripting-utils';
-import { BlockListener } from '@keep3r-network/keeper-scripting-utils';
-import { domainToChainId } from '@connext/nxtp-utils';
-import { utils } from 'ethers';
-
-import { type RelayerProxyHub } from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
-import { RootMessage, type InitialSetupProcessFromRoot } from '../utils/types';
-import { populateParametersForProcessFromRoot } from '../utils/processFromRoot';
+import type {Block} from '@ethersproject/abstract-provider';
+import type {BroadcastorProps} from '@keep3r-network/keeper-scripting-utils';
+import {BlockListener} from '@keep3r-network/keeper-scripting-utils';
+import {domainToChainId} from '@connext/nxtp-utils';
+import {utils} from 'ethers';
+import {type RelayerProxyHub} from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
+import {type RootMessage, type InitialSetupProcessFromRoot} from '../utils/types';
+import {populateParametersForProcessFromRoot} from '../utils/process-from-root';
 
 const apiURLs = {
   mainnet: 'https://postgrest.mainnet.connext.ninja',
@@ -16,14 +15,14 @@ const apiURLs = {
 
 const getUnprocessedMessages = async (baseUrl: string): Promise<RootMessage[]> => {
   const messages = await utils.fetchJson(`${baseUrl}/root_messages?processed=eq.false`);
-  return messages;
+  return messages as RootMessage[];
 };
 
 export async function runProcessFromRoot(
   jobContract: RelayerProxyHub,
   setup: InitialSetupProcessFromRoot,
   workMethod: string,
-  broadcastMethod: (props: BroadcastorProps) => Promise<void>
+  broadcastMethod: (props: BroadcastorProps) => Promise<void>,
 ) {
   // SETUP
   const blockListener = new BlockListener(setup.provider);
@@ -33,16 +32,16 @@ export async function runProcessFromRoot(
       const messages = await getUnprocessedMessages(apiURLs[setup.environment]);
 
       for (const message of messages) {
-        const processed = await jobContract.processedRootMessages(domainToChainId(+message.spoke_domain), message.sent_transaction_hash);
+        const processed = await jobContract.processedRootMessages(domainToChainId(Number(message.spoke_domain)), message.sent_transaction_hash);
         if (!processed) {
           try {
             // Encode data for relayer proxy hub
-            const { encodedData } = await populateParametersForProcessFromRoot(message, setup);
+            const {encodedData} = await populateParametersForProcessFromRoot(message, setup);
 
             await broadcastMethod({
               jobContract,
               workMethod,
-              workArguments: [encodedData, domainToChainId(+message.spoke_domain), message.sent_transaction_hash],
+              workArguments: [encodedData, domainToChainId(Number(message.spoke_domain)), message.sent_transaction_hash],
               block,
             });
           } catch (error: unknown) {
@@ -52,6 +51,6 @@ export async function runProcessFromRoot(
       }
     },
     setup.listenerIntervalDelay,
-    setup.listenerBlockDelay
+    setup.listenerBlockDelay,
   );
 }

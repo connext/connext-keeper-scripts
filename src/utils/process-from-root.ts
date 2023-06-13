@@ -4,11 +4,11 @@ import {
   getProcessFromOptimismRootArgs,
   getProcessFromPolygonRootArgs,
 } from '../helpers/processFromRoot';
-import { type ProcessFromRootParams, type InitialSetupProcessFromRoot, type RootMessage } from './types';
+import {type ProcessFromRootParameters, type InitialSetupProcessFromRoot, type RootMessage} from './types';
 
 export const getParametersForDomainFn: Record<
   string,
-  (message: RootMessage, setup: InitialSetupProcessFromRoot) => Promise<ProcessFromRootParams>
+  (message: RootMessage, setup: InitialSetupProcessFromRoot) => Promise<ProcessFromRootParameters>
 > = {
   // Mainnet
   '1634886255': getProcessFromArbitrumRootArgs,
@@ -21,12 +21,13 @@ export const getParametersForDomainFn: Record<
 
 export async function populateParametersForProcessFromRoot(
   message: RootMessage,
-  setup: InitialSetupProcessFromRoot
-): Promise<ProcessFromRootParams> {
+  setup: InitialSetupProcessFromRoot,
+): Promise<ProcessFromRootParameters> {
   const getParametersForDomain = getParametersForDomainFn[message.spoke_domain];
   if (!getParametersForDomain) {
     throw new Error('No getParametersForDomain function for domain: ' + message.spoke_domain);
   }
-  const params = await getParametersForDomain(message, setup);
-  return params;
+
+  const parameters = await getParametersForDomain(message, setup);
+  return parameters;
 }

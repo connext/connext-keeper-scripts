@@ -1,5 +1,5 @@
-import { type RootManagerMeta } from '@connext/nxtp-utils';
-import { BigNumber, constants } from 'ethers';
+import {type RootManagerMeta} from '@connext/nxtp-utils';
+import {BigNumber, constants} from 'ethers';
 import {
   getPropagateParametersArbitrum,
   getPropagateParametersBnb,
@@ -7,7 +7,7 @@ import {
   getPropagateParametersGnosis,
   getPropagateParametersZkSync,
 } from '../helpers/propagate';
-import { type ExtraPropagateParameters, type InitialSetupPropagate, type ParametersForDomains } from './types';
+import {type ExtraPropagateParameters, type InitialSetupPropagate, type ParametersForDomains} from './types';
 
 export const getParametersForDomainFn: Record<string, (setup: InitialSetupPropagate) => Promise<ExtraPropagateParameters>> = {
   // Mainnet
@@ -24,7 +24,7 @@ export const getParametersForDomainFn: Record<string, (setup: InitialSetupPropag
 export async function populateParametersForDomains(
   domains: string[],
   rootManagerMeta: RootManagerMeta,
-  setup: InitialSetupPropagate
+  setup: InitialSetupPropagate,
 ): Promise<ParametersForDomains> {
   const connectors: string[] = [];
   const encodedData: string[] = [];

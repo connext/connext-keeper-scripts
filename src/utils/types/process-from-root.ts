@@ -14,6 +14,6 @@ export type RootMessage = {
   sent_timestamp_secs?: number;
 };
 
-export type ProcessFromRootParams = {
+export type ProcessFromRootParameters = {
   encodedData: string;
 };
