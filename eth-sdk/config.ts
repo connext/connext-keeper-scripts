@@ -1,4 +1,4 @@
-import {defineConfig} from '@dethcrypto/eth-sdk';
+import { defineConfig } from '@dethcrypto/eth-sdk';
 
 export default defineConfig({
   contracts: {
@@ -14,6 +14,11 @@ export default defineConfig({
     bsc: {
       spokeConnector: '0x126A99af70eC62921C07E67943aCF61bF304Ef55',
     },
+    gnosis: {
+      ambHelper: '0x7d94ece17e81355326e3359115D4B02411825EdD',
+      spokeConnector: '0x771B2c910D76ecf84B100559CF3Ec4cB2e8D4aC5',
+      amb: '0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59',
+    },
     goerli: {
       relayerProxyHub: '0xe55162a662Abaf066D0fa6FFb720Dbe8Bc16342a',
       relayerProxyHubStaging: '0x811Aecd063da20717E885862Bcb7Dd9383F207a9',
@@ -28,6 +33,10 @@ export default defineConfig({
   rpc: {
     arbitrumOne: 'https://arb1.arbitrum.io/rpc',
     bsc: 'https://bsc-dataseed.binance.org/',
+    gnosis: 'https://rpc.gnosischain.com',
     arbitrumTestnet: 'https://goerli-rollup.arbitrum.io/rpc',
+  },
+  etherscanURLs: {
+    gnosis: 'https://api.gnosisscan.io/api',
   },
 });

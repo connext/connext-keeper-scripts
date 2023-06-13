@@ -5,10 +5,10 @@ import { FlashbotsBundleProvider } from '@flashbots/ethers-provider-bundle';
 import { FlashbotsBroadcastor, getEnvVariable, MempoolBroadcastor } from '@keep3r-network/keeper-scripting-utils';
 import { type RelayerProxyHub } from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
 import { runPropagate } from './shared/run-propagate';
-import { type Environment, type InitialSetupPropagate } from './utils/types';
+import { type Environment, type InitialSetupProcessFromRoot } from './utils/types';
 
 // SETUP
-const WORK_FUNCTION = 'propagateKeep3r';
+const WORK_FUNCTION = 'processFromRootKeep3r';
 const GAS_LIMIT = 2_000_000;
 const PRIORITY_FEE = 2e9;
 
@@ -17,12 +17,18 @@ const PRIORITY_FEE = 2e9;
   const flashbotsProviderUrl = getEnvVariable('FLASHBOTS_PROVIDER_URL');
   const provider = new providers.JsonRpcProvider(getEnvVariable('RPC_HTTPS_URI'));
   const arbProvider = new providers.JsonRpcProvider(getEnvVariable('ARBITRUM_RPC_URI'));
+  const gnoProvider = new providers.JsonRpcProvider(getEnvVariable('GNOSIS_RPC_URI'));
+  const optProvider = new providers.JsonRpcProvider(getEnvVariable('OPTIMISM_RPC_URI'));
+  const polyProvider = new providers.JsonRpcProvider(getEnvVariable('POLYGON_RPC_URI'));
   const txSigner = new Wallet(getEnvVariable('TX_SIGNER_PRIVATE_KEY'), provider);
   const bundleSigner = new Wallet(getEnvVariable('BUNDLE_SIGNER_PRIVATE_KEY'), provider);
 
-  const setup: InitialSetupPropagate = {
+  const setup: InitialSetupProcessFromRoot = {
     provider,
     arbProvider,
+    gnoProvider,
+    optProvider,
+    polyProvider,
     txSigner,
     bundleSigner,
     environment: getEnvVariable('ENVIRONMENT') as Environment,

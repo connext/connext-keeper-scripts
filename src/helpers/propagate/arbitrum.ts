@@ -3,10 +3,10 @@ import { getBaseFee } from '@arbitrum/sdk/dist/lib/utils/lib';
 import { getArbitrumOneSdk, getMainnetSdk } from '@dethcrypto/eth-sdk-client';
 import { BigNumber, constants, utils } from 'ethers';
 
-import { type ExtraPropagateParameters, type InitialSetup } from 'src/utils/types';
+import { type ExtraPropagateParameters, type InitialSetupPropagate } from 'src/utils/types';
 
 // Example at https://github.com/OffchainLabs/arbitrum-tutorials/blob/master/packages/greeter/scripts/exec.js
-export const getPropagateParameters = async ({ txSigner, arbProvider, provider }: InitialSetup): Promise<ExtraPropagateParameters> => {
+export const getPropagateParameters = async ({ txSigner, arbProvider, provider }: InitialSetupPropagate): Promise<ExtraPropagateParameters> => {
   const mainnetSdk = getMainnetSdk(txSigner);
 
   const arbSdk = getArbitrumOneSdk(arbProvider);

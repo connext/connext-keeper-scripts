@@ -1,18 +1,18 @@
-import type {Block} from '@ethersproject/abstract-provider';
-import type {BroadcastorProps} from '@keep3r-network/keeper-scripting-utils';
-import {BlockListener} from '@keep3r-network/keeper-scripting-utils';
-import {getChainData} from '@connext/nxtp-utils';
-import {SubgraphReader} from '@connext/nxtp-adapters-subgraph';
+import type { Block } from '@ethersproject/abstract-provider';
+import type { BroadcastorProps } from '@keep3r-network/keeper-scripting-utils';
+import { BlockListener } from '@keep3r-network/keeper-scripting-utils';
+import { getChainData } from '@connext/nxtp-utils';
+import { SubgraphReader } from '@connext/nxtp-adapters-subgraph';
 
-import {type RelayerProxyHub} from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
-import {populateParametersForDomains} from '../utils/propagate';
-import {type InitialSetup} from '../utils/types';
+import { type RelayerProxyHub } from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
+import { populateParametersForDomains } from '../utils/propagate';
+import { type InitialSetupPropagate } from '../utils/types';
 
 export async function runPropagate(
   jobContract: RelayerProxyHub,
-  setup: InitialSetup,
+  setup: InitialSetupPropagate,
   workMethod: string,
-  broadcastMethod: (props: BroadcastorProps) => Promise<void>,
+  broadcastMethod: (props: BroadcastorProps) => Promise<void>
 ) {
   // SETUP
   const blockListener = new BlockListener(setup.provider);
@@ -36,14 +36,14 @@ export async function runPropagate(
 
       try {
         // Encode data for relayer proxy hub
-        const {connectors, encodedData, fees} = await populateParametersForDomains(domains, rootManagerMeta, setup);
+        const { connectors, encodedData, fees } = await populateParametersForDomains(domains, rootManagerMeta, setup);
 
-        await broadcastMethod({jobContract, workMethod, workArguments: [connectors, fees, encodedData], block});
+        await broadcastMethod({ jobContract, workMethod, workArguments: [connectors, fees, encodedData], block });
       } catch (error: unknown) {
         if (error instanceof Error) console.log(`Propagate failed with:`, error.message);
       }
     },
     setup.listenerIntervalDelay,
-    setup.listenerBlockDelay,
+    setup.listenerBlockDelay
   );
 }
