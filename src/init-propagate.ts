@@ -1,11 +1,11 @@
 import process from 'node:process';
-import {getMainnetSdk, getGoerliSdk} from '@dethcrypto/eth-sdk-client';
-import {providers, Wallet} from 'ethers';
-import {FlashbotsBundleProvider} from '@flashbots/ethers-provider-bundle';
-import {FlashbotsBroadcastor, getEnvVariable, MempoolBroadcastor} from '@keep3r-network/keeper-scripting-utils';
-import {type RelayerProxyHub} from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
-import {runPropagate} from './shared/run-propagate';
-import {type Environment, type InitialSetupPropagate} from './utils/types';
+import { getMainnetSdk, getGoerliSdk } from '@dethcrypto/eth-sdk-client';
+import { providers, Wallet } from 'ethers';
+import { FlashbotsBundleProvider } from '@flashbots/ethers-provider-bundle';
+import { FlashbotsBroadcastor, getEnvVariable, MempoolBroadcastor } from '@keep3r-network/keeper-scripting-utils';
+import { type RelayerProxyHub } from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
+import { runPropagate } from './shared/run-propagate';
+import { type Environment, type InitialSetupPropagate } from './utils/types';
 
 // SETUP
 const WORK_FUNCTION = 'propagateKeep3r';
@@ -26,8 +26,8 @@ const PRIORITY_FEE = 2e9;
     txSigner,
     bundleSigner,
     environment: getEnvVariable('ENVIRONMENT') as Environment,
-    listenerIntervalDelay: Number(process.env.LISTENER_INTERVAL_DELAY ?? 60_000),
-    listenerBlockDelay: Number(process.env.LISTENER_BLOCK_DELAY ?? 0),
+    listenerIntervalDelay: Number(process.env.LISTENER_INTERVAL_DELAY_PROPAGATE ?? 60_000),
+    listenerBlockDelay: Number(process.env.LISTENER_BLOCK_DELAY_PROPAGATE ?? 0),
   };
 
   const envProxyHub: Record<Environment, RelayerProxyHub> = {

@@ -32,8 +32,8 @@ const PRIORITY_FEE = 2e9;
     txSigner,
     bundleSigner,
     environment: getEnvVariable('ENVIRONMENT') as Environment,
-    listenerIntervalDelay: Number(process.env.LISTENER_INTERVAL_DELAY ?? 60_000),
-    listenerBlockDelay: Number(process.env.LISTENER_BLOCK_DELAY ?? 0),
+    listenerIntervalDelay: Number(process.env.LISTENER_INTERVAL_DELAY_PROCESS_FROM_ROOT ?? 300_000),
+    listenerBlockDelay: Number(process.env.LISTENER_BLOCK_DELAY_PROCESS_FROM_ROOT ?? 0),
   };
 
   const envProxyHub: Record<Environment, RelayerProxyHub> = {
