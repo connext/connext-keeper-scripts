@@ -1,15 +1,15 @@
-import { BigNumber, type BigNumberish, utils } from 'ethers';
-import { l2Networks } from '@arbitrum/sdk/dist/lib/dataEntities/networks';
-import { NodeInterface__factory } from '@arbitrum/sdk/dist/lib/abi/factories/NodeInterface__factory';
-import { EventFetcher, L2TransactionReceipt } from '@arbitrum/sdk';
-import { RollupUserLogic__factory } from '@connext/smart-contracts';
-import { type RootMessage, type InitialSetupProcessFromRoot, type ProcessFromRootParameters } from '../../utils/types';
+import {BigNumber, type BigNumberish, utils} from 'ethers';
+import {l2Networks} from '@arbitrum/sdk/dist/lib/dataEntities/networks';
+import {NodeInterface__factory} from '@arbitrum/sdk/dist/lib/abi/factories/NodeInterface__factory';
+import {EventFetcher, L2TransactionReceipt} from '@arbitrum/sdk';
+import {RollupUserLogic__factory} from '@connext/smart-contracts';
+import {type RootMessage, type InitialSetupProcessFromRoot, type ProcessFromRootParameters} from '../../utils/types';
 
 const NODE_INTERFACE_ADDRESS = '0x00000000000000000000000000000000000000C8';
 
 export const getProcessFromArbitrumRootArgs = async (
-  { sent_transaction_hash: sendHash }: RootMessage,
-  { arbProvider, provider, environment }: InitialSetupProcessFromRoot
+  {sent_transaction_hash: sendHash}: RootMessage,
+  {arbProvider, provider, environment}: InitialSetupProcessFromRoot,
 ): Promise<ProcessFromRootParameters> => {
   // // // Things that are needed:
   // // uint64 _nodeNum, x
@@ -110,7 +110,7 @@ export const getProcessFromArbitrumRootArgs = async (
   // Get the proof
   const parameters = await NodeInterface__factory.connect(NODE_INTERFACE_ADDRESS, arbProvider).constructOutboxProof(
     foundBlock.sendCount.toNumber() as number,
-    message.event.position.toNumber() as number
+    message.event.position.toNumber() as number,
   );
 
   // Generate the args to submit
@@ -118,8 +118,8 @@ export const getProcessFromArbitrumRootArgs = async (
     [
       'tuple(bytes32,bytes32,bytes32[],uint256,tuple(address l2Sender,address to,uint256 l2Block,uint256 l1Block,uint256 l2Timestamp,uint256 value,bytes callData))',
     ],
-    [[earliestNodeWithExit, foundBlock.sendRoot, foundBlock.hash, parameters.proof, index, l2Message]]
+    [[earliestNodeWithExit, foundBlock.sendRoot, foundBlock.hash, parameters.proof, index, l2Message]],
   );
 
-  return { encodedData };
+  return {encodedData};
 };
