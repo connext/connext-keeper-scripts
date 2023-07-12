@@ -5,14 +5,14 @@ export default defineConfig({
     mainnet: {
       relayerProxyHub: '0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28',
       arbitrumHubConnector: '0xd151C9ef49cE2d30B829a98A07767E3280F70961',
-      bnbHubConnector: '0xfaf539a73659feaec96ec7242f075be0445526a8',
+      bnbHubConnector: '0x69009c6f567590d8B469dbF4C8808e8ee32b8a45',
       gnosisHubConnector: '0x245F757d660C3ec65416168690431076d58d6413',
     },
     arbitrumOne: {
       spokeConnector: '0xFD81392229b6252cF761459d370C239Be3aFc54F',
     },
     bsc: {
-      spokeConnector: '0x126A99af70eC62921C07E67943aCF61bF304Ef55',
+      spokeConnector: '0xC667DE991c8B40C969f6996b4F6167851527c9f6',
     },
     goerli: {
       relayerProxyHub: '0xe55162a662Abaf066D0fa6FFb720Dbe8Bc16342a',

@@ -1,6 +1,5 @@
 import {getMainnetSdk} from '@dethcrypto/eth-sdk-client';
 import {Contract, utils} from 'ethers';
-
 import {type ExtraPropagateParameters, type InitialSetup} from 'src/utils/types';
 
 export const getPropagateParameters = async ({txSigner, provider}: InitialSetup): Promise<ExtraPropagateParameters> => {

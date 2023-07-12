@@ -3,7 +3,6 @@ import type {BroadcastorProps} from '@keep3r-network/keeper-scripting-utils';
 import {BlockListener} from '@keep3r-network/keeper-scripting-utils';
 import {getChainData} from '@connext/nxtp-utils';
 import {SubgraphReader} from '@connext/nxtp-adapters-subgraph';
-
 import {type RelayerProxyHub} from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
 import {populateParametersForDomains} from '../utils/propagate';
 import {type InitialSetup} from '../utils/types';

@@ -1,6 +1,5 @@
 import {BigNumber, Contract, utils} from 'ethers';
 import {Provider} from 'zksync-web3';
-
 import {type ExtraPropagateParameters, type InitialSetup} from 'src/utils/types';
 
 const ZKSYNC_ABI = [
