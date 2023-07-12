@@ -69,7 +69,8 @@
       "new-cap": "off",
       "no-await-in-loop": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
-      "import/no-extraneous-dependencies": "warn"
+      "import/no-extraneous-dependencies": "warn",
+      "top-level-await": "off"
     }
   },
   "packageManager": "yarn@3.5.0"

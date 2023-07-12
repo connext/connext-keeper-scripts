@@ -1,12 +1,11 @@
-import { L1ToL2MessageGasEstimator } from '@arbitrum/sdk/dist/lib/message/L1ToL2MessageGasEstimator';
-import { getBaseFee } from '@arbitrum/sdk/dist/lib/utils/lib';
-import { getArbitrumOneSdk, getMainnetSdk } from '@dethcrypto/eth-sdk-client';
-import { BigNumber, constants, utils } from 'ethers';
-
-import { type ExtraPropagateParameters, type InitialSetup } from 'src/utils/types';
+import {L1ToL2MessageGasEstimator} from '@arbitrum/sdk/dist/lib/message/L1ToL2MessageGasEstimator';
+import {getBaseFee} from '@arbitrum/sdk/dist/lib/utils/lib';
+import {getArbitrumOneSdk, getMainnetSdk} from '@dethcrypto/eth-sdk-client';
+import {BigNumber, constants, utils} from 'ethers';
+import {type ExtraPropagateParameters, type InitialSetup} from 'src/utils/types';
 
 // Example at https://github.com/OffchainLabs/arbitrum-tutorials/blob/master/packages/greeter/scripts/exec.js
-export const getPropagateParameters = async ({ txSigner, arbProvider, provider }: InitialSetup): Promise<ExtraPropagateParameters> => {
+export const getPropagateParameters = async ({txSigner, arbProvider, provider}: InitialSetup): Promise<ExtraPropagateParameters> => {
   const mainnetSdk = getMainnetSdk(txSigner);
 
   const arbSdk = getArbitrumOneSdk(arbProvider);
@@ -30,7 +29,7 @@ export const getPropagateParameters = async ({ txSigner, arbProvider, provider }
       excessFeeRefundAddress: arbSdk.spokeConnector.address,
     },
     baseFee,
-    provider
+    provider,
   );
 
   const gasLimitForAutoRedeem = l1ToL2MessageGasParameters.gasLimit.mul(5);
@@ -42,5 +41,5 @@ export const getPropagateParameters = async ({ txSigner, arbProvider, provider }
 
   const encodedData = utils.defaultAbiCoder.encode(['uint256', 'uint256', 'uint256'], [submissionPriceWei, maxGas, gasPriceBid]);
 
-  return { connector: '', fee: callValue, encodedData };
+  return {connector: '', fee: callValue, encodedData};
 };
