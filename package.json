@@ -14,10 +14,12 @@
   "contributors": [],
   "private": true,
   "scripts": {
-    "postinstall": "eth-sdk",
+    "prepare": "eth-sdk",
     "start:propagate": "ts-node src/init-propagate.ts",
+    "start:process": "ts-node src/init-process-from-root.ts",
     "build": "eth-sdk && tsc",
     "prod:propagate": "node dist/src/init-propagate.js",
+    "prod:process": "node dist/src/init-process-from-root.ts",
     "lint": "xo",
     "lint:fix": "xo --fix"
   },
@@ -28,7 +30,9 @@
     "@arbitrum/sdk": "3.1.3",
     "@connext/nxtp-adapters-subgraph": "^2.0.0-alpha.1",
     "@connext/nxtp-utils": "^2.0.3",
+    "@connext/smart-contracts": "^2.0.0-alpha.1",
     "@eth-optimism/sdk": "^2.1.0",
+    "@ethersproject/abstract-provider": "^5.7.0",
     "@flashbots/ethers-provider-bundle": "^0.6.2",
     "@keep3r-network/keeper-scripting-utils": "1.1.0",
     "dotenv": "16.1.4",
@@ -44,6 +48,7 @@
     "@types/lodash.isequal": "4.5.6",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
     "ts-node": "10.9.1",
     "typechain": "^8.2.0",
     "typescript": "5.1.3",
@@ -69,7 +74,8 @@
       "new-cap": "off",
       "no-await-in-loop": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
-      "import/no-extraneous-dependencies": "warn"
+      "import/no-extraneous-dependencies": "warn",
+      "unicorn/prefer-top-level-await": "off"
     }
   },
   "packageManager": "yarn@3.5.0"

@@ -1,9 +1,8 @@
 import {Contract} from 'ethers';
 import {getMainnetSdk} from '@dethcrypto/eth-sdk-client';
+import {type ExtraPropagateParameters, type InitialSetupPropagate} from 'src/utils/types';
 
-import {type ExtraPropagateParameters, type InitialSetup} from 'src/utils/types';
-
-export const getPropagateParameters = async ({txSigner, provider}: InitialSetup): Promise<ExtraPropagateParameters> => {
+export const getPropagateParameters = async ({txSigner, provider}: InitialSetupPropagate): Promise<ExtraPropagateParameters> => {
   const mainnetSdk = getMainnetSdk(txSigner);
   const ambAddress = await mainnetSdk.bnbHubConnector.AMB();
 

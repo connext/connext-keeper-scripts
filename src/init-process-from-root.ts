@@ -4,11 +4,11 @@ import {providers, Wallet} from 'ethers';
 import {FlashbotsBundleProvider} from '@flashbots/ethers-provider-bundle';
 import {FlashbotsBroadcastor, getEnvVariable, MempoolBroadcastor} from '@keep3r-network/keeper-scripting-utils';
 import {type RelayerProxyHub} from '.dethcrypto/eth-sdk-client/esm/types/mainnet';
-import {runPropagate} from './shared/run-propagate';
-import {type Environment, type InitialSetupPropagate} from './utils/types';
+import {type Environment, type InitialSetupProcessFromRoot} from './utils/types';
+import {runProcessFromRoot} from './shared/run-processfromroot';
 
 // SETUP
-const WORK_FUNCTION = 'propagateKeep3r';
+const WORK_FUNCTION = 'processFromRootKeep3r';
 const GAS_LIMIT = 2_000_000;
 const PRIORITY_FEE = 2e9;
 
@@ -17,17 +17,23 @@ const PRIORITY_FEE = 2e9;
   const flashbotsProviderUrl = getEnvVariable('FLASHBOTS_PROVIDER_URL');
   const provider = new providers.JsonRpcProvider(getEnvVariable('RPC_HTTPS_URI'));
   const arbProvider = new providers.JsonRpcProvider(getEnvVariable('ARBITRUM_RPC_URI'));
+  const gnoProvider = new providers.JsonRpcProvider(getEnvVariable('GNOSIS_RPC_URI'));
+  const optProvider = new providers.JsonRpcProvider(getEnvVariable('OPTIMISM_RPC_URI'));
+  const polyProvider = new providers.JsonRpcProvider(getEnvVariable('POLYGON_RPC_URI'));
   const txSigner = new Wallet(getEnvVariable('TX_SIGNER_PRIVATE_KEY'), provider);
   const bundleSigner = new Wallet(getEnvVariable('BUNDLE_SIGNER_PRIVATE_KEY'), provider);
 
-  const setup: InitialSetupPropagate = {
+  const setup: InitialSetupProcessFromRoot = {
     provider,
     arbProvider,
+    gnoProvider,
+    optProvider,
+    polyProvider,
     txSigner,
     bundleSigner,
     environment: getEnvVariable('ENVIRONMENT') as Environment,
-    listenerIntervalDelay: Number(process.env.LISTENER_INTERVAL_DELAY_PROPAGATE ?? 60_000),
-    listenerBlockDelay: Number(process.env.LISTENER_BLOCK_DELAY_PROPAGATE ?? 0),
+    listenerIntervalDelay: Number(process.env.LISTENER_INTERVAL_DELAY_PROCESS_FROM_ROOT ?? 300_000),
+    listenerBlockDelay: Number(process.env.LISTENER_BLOCK_DELAY_PROCESS_FROM_ROOT ?? 0),
   };
 
   const envProxyHub: Record<Environment, RelayerProxyHub> = {
@@ -44,10 +50,10 @@ const PRIORITY_FEE = 2e9;
     // In ethereum mainnet, send the tx through flashbots
     const flashbotsProvider = await FlashbotsBundleProvider.create(provider, bundleSigner, flashbotsProviderUrl);
     const flashbotBroadcastor = new FlashbotsBroadcastor(flashbotsProvider as any, PRIORITY_FEE, GAS_LIMIT);
-    await runPropagate(proxyHub, setup, WORK_FUNCTION, flashbotBroadcastor.tryToWorkOnFlashbots.bind(flashbotBroadcastor));
+    await runProcessFromRoot(proxyHub, setup, WORK_FUNCTION, flashbotBroadcastor.tryToWorkOnFlashbots.bind(flashbotBroadcastor));
   } else {
     // In goerli, since flashbots are less reliable, send the tx through the mempool
     const mempoolBroadcastor = new MempoolBroadcastor(provider, PRIORITY_FEE, GAS_LIMIT);
-    await runPropagate(proxyHub, setup, WORK_FUNCTION, mempoolBroadcastor.tryToWorkOnMempool.bind(mempoolBroadcastor));
+    await runProcessFromRoot(proxyHub, setup, WORK_FUNCTION, mempoolBroadcastor.tryToWorkOnMempool.bind(mempoolBroadcastor));
   }
 })();

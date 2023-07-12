@@ -7,9 +7,9 @@ import {
   getPropagateParametersGnosis,
   getPropagateParametersZkSync,
 } from '../helpers/propagate';
-import {type ExtraPropagateParameters, type InitialSetup, type ParametersForDomains} from './types';
+import {type ExtraPropagateParameters, type InitialSetupPropagate, type ParametersForDomains} from './types';
 
-export const getParametersForDomainFn: Record<string, (setup: InitialSetup) => Promise<ExtraPropagateParameters>> = {
+export const getParametersForDomainFn: Record<string, (setup: InitialSetupPropagate) => Promise<ExtraPropagateParameters>> = {
   // Mainnet
   '1634886255': getPropagateParametersArbitrum,
   '6450786': getPropagateParametersBnb,
@@ -24,7 +24,7 @@ export const getParametersForDomainFn: Record<string, (setup: InitialSetup) => P
 export async function populateParametersForDomains(
   domains: string[],
   rootManagerMeta: RootManagerMeta,
-  setup: InitialSetup,
+  setup: InitialSetupPropagate,
 ): Promise<ParametersForDomains> {
   const connectors: string[] = [];
   const encodedData: string[] = [];
