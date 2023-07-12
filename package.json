@@ -70,7 +70,7 @@
       "no-await-in-loop": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
       "import/no-extraneous-dependencies": "warn",
-      "top-level-await": "off"
+      "unicorn/prefer-top-level-await": "warn"
     }
   },
   "packageManager": "yarn@3.5.0"
