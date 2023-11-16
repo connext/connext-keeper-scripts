@@ -17,12 +17,14 @@ const PRIORITY_FEE = 2e9;
   const flashbotsProviderUrl = getEnvVariable('FLASHBOTS_PROVIDER_URL');
   const provider = new providers.JsonRpcProvider(getEnvVariable('RPC_HTTPS_URI'));
   const arbProvider = new providers.JsonRpcProvider(getEnvVariable('ARBITRUM_RPC_URI'));
+  const lineaProvider = new providers.JsonRpcProvider(getEnvVariable('LINEA_RPC_URI'));
   const txSigner = new Wallet(getEnvVariable('TX_SIGNER_PRIVATE_KEY'), provider);
   const bundleSigner = new Wallet(getEnvVariable('BUNDLE_SIGNER_PRIVATE_KEY'), provider);
 
   const setup: InitialSetup = {
     provider,
     arbProvider,
+    lineaProvider,
     txSigner,
     bundleSigner,
     environment: getEnvVariable('ENVIRONMENT') as Environment,
