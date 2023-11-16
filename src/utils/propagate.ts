@@ -3,7 +3,7 @@ import {BigNumber, constants} from 'ethers';
 import {
   getPropagateParametersArbitrum,
   getPropagateParametersBnb,
-  getPropagateParametersConsensys,
+  getPropagateParametersLinea,
   getPropagateParametersGnosis,
   getPropagateParametersZkSync,
 } from '../helpers/propagate';
@@ -14,11 +14,12 @@ export const getParametersForDomainFn: Record<string, (setup: InitialSetup) => P
   '1634886255': getPropagateParametersArbitrum,
   '6450786': getPropagateParametersBnb,
   '6778479': getPropagateParametersGnosis,
+  '1818848877': getPropagateParametersLinea,
 
   // Testnet
   '1734439522': getPropagateParametersArbitrum,
   '2053862260': getPropagateParametersZkSync,
-  '1668247156': getPropagateParametersConsensys,
+  '1668247156': getPropagateParametersLinea,
 };
 
 export async function populateParametersForDomains(

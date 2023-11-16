@@ -2,4 +2,4 @@ export {getPropagateParameters as getPropagateParametersArbitrum} from './arbitr
 export {getPropagateParameters as getPropagateParametersBnb} from './bnb';
 export {getPropagateParameters as getPropagateParametersGnosis} from './gnosis';
 export {getPropagateParameters as getPropagateParametersZkSync} from './zksync';
-export {getPropagateParameters as getPropagateParametersConsensys} from './consensys';
+export {getPropagateParameters as getPropagateParametersLinea} from './linea';
